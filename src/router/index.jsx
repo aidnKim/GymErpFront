@@ -43,7 +43,7 @@ import PostView from "../pages/PostView.jsx";
 import MemberDetail from "../pages/Members/MemberDetail.jsx";
 
 // ✅ 그래프 테스트
-import GraphTest from "../pages/GraphTest.jsx";
+import GraphTest from "../pages/Graphtest.jsx";
 import EmpAttendance from "../pages/EmpAttendance.jsx";
 
 const router = createHashRouter([
