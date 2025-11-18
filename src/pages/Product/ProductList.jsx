@@ -161,7 +161,6 @@ function ProductList() {
 
     return (
         <div className="d-flex" style={{ height: 'calc(100vh - 56px)', overflow: 'hidden' }}>
-            <h1>cicd  test2</h1>
             {/* 왼쪽 패널 */}
             <div
                 style={{ width: '350px', borderRight: '1px solid #dee2e6', overflowY: 'auto' }}
