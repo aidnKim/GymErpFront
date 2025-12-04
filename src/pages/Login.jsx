@@ -45,13 +45,77 @@ function Login() {
     }
   };
 
+  // 빠른 체험 버튼 - 관리자 계정
+  const handleQuickAdminLogin = async () => {
+    setEmpEmail("admin");
+    setPassword("admin");
+    setError("");
+    setLoading(true);
+
+    // 약간의 딜레이로 입력창 채워지는 걸 보여줌
+    setTimeout(async () => {
+      try {
+        const response = await api.post("/v1/emp/login", {
+          empEmail: "admin",
+          password: "admin"
+        });
+        if (response.data && response.data.empNum) {
+          const user = response.data;
+          dispatch({ type: "USER_INFO", payload: user });
+          sessionStorage.setItem("user", JSON.stringify(user));
+          navigate(from, { replace: true });
+        }
+      } catch (error) {
+        console.error("Admin Login Error", error);
+        if (error.response?.status === 401) {
+          setError("관리자 계정 로그인에 실패했습니다.");
+        } else {
+          setError("로그인에 실패했습니다. 다시 시도해주세요.");
+        }
+        setLoading(false);
+      }
+    }, 300);
+  };
+
+  // 빠른 체험 버튼 - 직원 계정
+  const handleQuickTrainerLogin = async () => {
+    setEmpEmail("trainer1@gym.com");
+    setPassword("12345");
+    setError("");
+    setLoading(true);
+
+    // 약간의 딜레이로 입력창 채워지는 걸 보여줌
+    setTimeout(async () => {
+      try {
+        const response = await api.post("/v1/emp/login", {
+          empEmail: "trainer1@gym.com",
+          password: "12345"
+        });
+        if (response.data && response.data.empNum) {
+          const user = response.data;
+          dispatch({ type: "USER_INFO", payload: user });
+          sessionStorage.setItem("user", JSON.stringify(user));
+          navigate(from, { replace: true });
+        }
+      } catch (error) {
+        console.error("Trainer Login Error", error);
+        if (error.response?.status === 401) {
+          setError("직원 계정 로그인에 실패했습니다.");
+        } else {
+          setError("로그인에 실패했습니다. 다시 시도해주세요.");
+        }
+        setLoading(false);
+      }
+    }, 300);
+  };
+
   return (
     <div className="card shadow-lg border-0" style={{ width: "440px", borderRadius: "15px" }}>
       <div className="card-body p-5">
         <div className="text-center mb-4">
           {/* ⬇ 아이콘을 Navbar 톤(—bs-dark)으로 통일 */}
           <div className="mb-3">
-             <HeartbeatLogo stroke="#0a0f1f" /> 
+            <HeartbeatLogo stroke="#0a0f1f" />
           </div>
           <h2 className="card-title fw-bold mb-2">GYM ERP</h2>
           <p className="text-muted">관리 시스템</p>
@@ -97,7 +161,7 @@ function Login() {
             <label htmlFor="login-password" className="label">Password</label>
           </div>
 
-          {/* ⬇ 버튼을 Navbar 톤(다크)으로 통일 */}
+          {/* 메인 로그인 버튼 */}
           <button
             type="submit"
             className="btn btn-dark w-100 py-3 fw-semibold"
@@ -117,6 +181,31 @@ function Login() {
             )}
           </button>
         </form>
+
+        {/* 빠른 체험 버튼들 */}
+        <div className="mt-4 pt-3 border-top">
+          <p className="text-center text-muted small mb-3">빠른 체험</p>
+          <div className="d-flex gap-2">
+            <button
+              onClick={handleQuickAdminLogin}
+              className="btn btn-outline-secondary btn-sm flex-fill"
+              disabled={loading}
+              style={{ fontSize: "0.85rem" }}
+            >
+              <i className="bi bi-shield-lock me-1"></i>
+              관리자 계정
+            </button>
+            <button
+              onClick={handleQuickTrainerLogin}
+              className="btn btn-outline-secondary btn-sm flex-fill"
+              disabled={loading}
+              style={{ fontSize: "0.85rem" }}
+            >
+              <i className="bi bi-person me-1"></i>
+              직원 계정
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
