@@ -184,7 +184,7 @@ function Login() {
 
         {/* 빠른 체험 버튼들 */}
         <div className="mt-4 pt-3 border-top">
-          <p className="text-center text-muted small mb-3">빠른 체험</p>
+          <p className="text-center text-muted small mb-3">빠른 체험(체험하실 계정을 선택해 주세요)</p>
           <div className="d-flex gap-2">
             <button
               onClick={handleQuickAdminLogin}
